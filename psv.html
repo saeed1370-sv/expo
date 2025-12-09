@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <title>PSV Sizing - Tadbir Farayand Vira (Modern DarkPro)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        /* ---------------------------
+           COLOR SYSTEM – LIGHT / DARK
+        ---------------------------- */
+        :root {
+            --primary: #06b6d4;
+            --primary-soft: rgba(34, 211, 238, 0.12);
+            --primary-strong: #0891b2;
+
+            --accent: #22c55e;
+            --danger: #ef4444;
+
+            --radius-lg: 12px;
+            --radius-md: 8px;
+            --radius-sm: 6px;
+        }
+
+        /* LIGHT THEME (default variables) */
+        body.light-theme {
+            --bg: #f3f4f6;
+            --bg-elevated: #ffffff;
+            --bg-elevated-soft: #f9fafb;
+
+            --border-subtle: #e5e7eb;
+            --border-strong: #cbd5f5;
+
+            --text-main: #111827;
+            --text-muted: #6b7280;
+            --text-invert: #f9fafb;
+
+            --tab-bg: #e5e7eb;
+            --tab-bg-active: #0f172a;
+            --tab-text: #4b5563;
+            --tab-text-active: #e5f9ff;
+
+            --chip-bg: #e5f9ff;
+        }
+
+        /* DARK THEME (Dark Pro) */
+        body.dark-theme {
+            --bg: #050816;
+            --bg-elevated: #0b1120;
+            --bg-elevated-soft: #020617;
+
+            --border-subtle: #1e293b;
+            --border-strong: #334155;
+
+            --text-main: #e5e7eb;
+            --text-muted: #9ca3af;
+            --text-invert: #020617;
+
+            --tab-bg: #020617;
+            --tab-bg-active: #0891b2;
+            --tab-text: #9ca3af;
+            --tab-text-active: #0f172a;
+
+            --chip-bg: rgba(8, 145, 178, 0.18);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            transition: background-color 0.25s ease, color 0.25s ease;
+        }
+
+        .app-shell {
+            max-width: 1120px;
+            margin: 20px auto 32px;
+            padding: 0 12px;
+        }
+
+        /* ---------------------------
+           HEADER / BRANDING
+        ---------------------------- */
+        .header-card {
+            background: radial-gradient(circle at top left, rgba(34, 211, 238, 0.3), transparent 55%),
+                        linear-gradient(135deg, #020617, #0b1120 55%, #020617);
+            color: var(--text-invert);
+            border-radius: 18px;
+            padding: 18px 18px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            box-shadow:
+                0 18px 40px rgba(15, 23, 42, 0.65),
+                0 0 0 1px rgba(148, 163, 184, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 85% 15%, rgba(59, 130, 246, 0.16), transparent 60%);
+            opacity: 0.85;
+            pointer-events: none;
+        }
+
+        .header-content {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+        }
+
+        .brand-block {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .brand-name-en-main {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .brand-name-en-sub {
+            font-size: 11px;
+            opacity: 0.9;
+        }
+
+        .brand-credits {
+            font-size: 11px;
+            opacity: 0.9;
+        }
+
+        .header-title-block {
+            text-align: right;
+        }
+
+        .header-main-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .header-subtitle {
+            font-size: 11px;
+            opacity: 0.9;
+        }
+
+        /* THEME TOGGLE */
+        .theme-toggle-wrapper {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 2;
+        }
+
+        .theme-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 9px;
+            font-size: 11px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            background: rgba(15, 23, 42, 0.8);
+            color: #e5e7eb;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: background 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            background: rgba(15, 23, 42, 0.95);
+            border-color: rgba(94, 234, 212, 0.7);
+            transform: translateY(-1px);
+        }
+
+        .theme-toggle-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 999px;
+            background: radial-gradient(circle at 30% 30%, #fde68a, #f59e0b 55%, #b45309);
+            box-shadow: 0 0 12px rgba(251, 191, 36, 0.6);
+        }
+
+        body.light-theme .theme-toggle-dot {
+            background: radial-gradient(circle at 30% 30%, #0ea5e9, #0369a1 55%, #0f172a);
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
+        }
+
+        /* ---------------------------
+           MAIN CARD / SECTIONS
+        ---------------------------- */
+        .main-card {
+            margin-top: 18px;
+            background-color: var(--bg-elevated);
+            border-radius: var(--radius-lg);
+            box-shadow:
+                0 14px 30px rgba(15, 23, 42, 0.35),
+                0 0 0 1px rgba(15, 23, 42, 0.8);
+            padding: 18px 18px 22px;
+        }
+
+        body.light-theme .main-card {
+            box-shadow:
+                0 12px 30px rgba(15, 23, 42, 0.12),
+                0 0 0 1px rgba(148, 163, 184, 0.3);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .section-subtitle {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* ---------------------------
+           PROJECT INFO
+        ---------------------------- */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 8px 14px;
+            margin-bottom: 8px;
+        }
+
+        label {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="number"],
+        select,
+        textarea {
+            margin-top: 2px;
+            padding: 6px 8px;
+            font-size: 12px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-subtle);
+            width: 100%;
+            background-color: var(--bg-elevated-soft);
+            color: var(--text-main);
+            transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-strong);
+            box-shadow: 0 0 0 1px rgba(8, 145, 178, 0.6);
+            background-color: var(--bg);
+        }
+
+        textarea {
+            min-height: 54px;
+            resize: vertical;
+        }
+
+        .project-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+            margin-top: 8px;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* ---------------------------
+           BUTTONS
+        ---------------------------- */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            border-radius: var(--radius-md);
+            font-size: 11px;
+            border: 1px solid transparent;
+            background: transparent;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: background-color 0.15s ease, transform 0.05s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-strong));
+            color: #ecfeff;
+            border-color: rgba(8, 145, 178, 0.7);
+            box-shadow: 0 7px 18px rgba(8, 145, 178, 0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 22px rgba(8, 145, 178, 0.45);
+        }
+
+        .btn-secondary {
+            background-color: var(--bg-elevated-soft);
+            border-color: var(--border-subtle);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary-soft);
+            border-color: var(--primary-strong);
+        }
+
+        .btn-outline {
+            border-color: var(--border-subtle);
+            background-color: transparent;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary-strong);
+            background-color: var(--primary-soft);
+        }
+
+        .btn-icon {
+            font-size: 12px;
+        }
+
+        /* ---------------------------
+           TABS
+        ---------------------------- */
+        .tabs {
+            margin-top: 14px;
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 2px;
+        }
+
+        .tab {
+            flex: 0 0 auto;
+            padding: 6px 10px;
+            font-size: 12px;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            background-color: var(--tab-bg);
+            color: var(--tab-text);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background-color 0.15s ease, color 0.15s ease, transform 0.05s ease, border-color 0.15s ease;
+            margin-bottom: 4px;
+        }
+
+        .tab span {
+            font-size: 13px;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, var(--tab-bg-active), #0f172a);
+            color: var(--tab-text-active);
+            border-color: rgba(148, 163, 184, 0.9);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 14px rgba(15, 23, 42, 0.45);
+        }
+
+        .tab-content {
+            display: none;
+            margin-top: 12px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .calc-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .unit-hint {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px 16px;
+        }
+
+        .calc-actions {
+            margin-top: 4px;
+        }
+
+        .error-message {
+            margin-top: 4px;
+            font-size: 11px;
+            color: #fecaca;
+        }
+
+        body.light-theme .error-message {
+            color: #b91c1c;
+        }
+
+        .result-card {
+            margin-top: 8px;
+            padding: 10px 12px;
+            background-color: var(--bg-elevated-soft);
+            border-radius: var(--radius-md);
+            border: 1px dashed var(--border-subtle);
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .result-label {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .result-value {
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .orifice-line {
+            margin-top: 4px;
+            padding-top: 4px;
+            border-top: 1px dashed var(--border-subtle);
+        }
+
+        .note {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 8px;
+            line-height: 1.7;
+        }
+
+        /* SUMMARY & FOOTER */
+        .summary-card {
+            margin-top: 14px;
+            padding: 12px 12px 14px;
+            border-radius: var(--radius-md);
+            background-color: var(--primary-soft);
+            border: 1px solid var(--border-strong);
+            font-size: 12px;
+        }
+
+        .summary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .summary-title {
+            font-weight: 600;
+        }
+
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 4px;
+        }
+
+        .summary-table th,
+        .summary-table td {
+            border: 1px solid var(--border-strong);
+            padding: 4px 6px;
+            font-size: 11px;
+            text-align: center;
+        }
+
+        .summary-table th {
+            background-color: rgba(15, 23, 42, 0.9);
+            color: #e5f9ff;
+        }
+
+        body.light-theme .summary-table th {
+            background-color: #e0edff;
+            color: #111827;
+        }
+
+        .footer-card {
+            margin-top: 12px;
+            font-size: 11px;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .footer-card strong {
+            color: #bfdbfe;
+        }
+
+        body.light-theme .footer-card strong {
+            color: #374151;
+        }
+
+        .btn-print {
+            margin-top: 8px;
+        }
+
+        /* PSV FIGURE */
+        .psv-figure-card {
+            margin-top: 14px;
+            padding: 12px 12px 14px;
+            border-radius: var(--radius-md);
+            background-color: #0b1120;
+            border: 1px solid rgba(56, 189, 248, 0.5);
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        body.light-theme .psv-figure-card {
+            background-color: #fff7ed;
+            border-color: #fed7aa;
+        }
+
+        .psv-figure-svg {
+            flex: 0 0 auto;
+        }
+
+        .psv-figure-svg svg {
+            width: 90px;
+            height: 180px;
+        }
+
+        .psv-figure-text {
+            flex: 1 1 200px;
+            font-size: 12px;
+        }
+
+        .psv-figure-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .psv-figure-line {
+            margin-bottom: 2px;
+        }
+
+        .psv-figure-note {
+            margin-top: 6px;
+            font-size: 11px;
+            color: #f97316;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .project-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 640px) {
+            .header-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .header-title-block {
+                text-align: left;
+            }
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+            .summary-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* PRINT */
+        @media print {
+            body {
+                background-color: #ffffff !important;
+            }
+            .header-card,
+            .main-card {
+                box-shadow: none !important;
+                border-radius: 0 !important;
+            }
+            .tabs,
+            .tab-content,
+            .project-actions,
+            .btn-print,
+            .theme-toggle-wrapper {
+                display: none !important;
+            }
+            .summary-card {
+                border: 1px solid #9ca3af;
+                background-color: #ffffff;
+            }
+            .footer-card {
+                border-top: 1px solid #e5e7eb;
+                margin-top: 10px;
+                padding-top: 6px;
+            }
+        }
+    </style>
+</head>
+
+<body class="dark-theme">
+<div class="app-shell">
+
+    <!-- HEADER -->
+    <header class="header-card">
+        <div class="theme-toggle-wrapper">
+            <button id="theme-toggle" class="theme-toggle-btn" type="button">
+                <span class="theme-toggle-dot"></span>
+                <span id="theme-toggle-label">Dark Pro</span>
+            </button>
+        </div>
+
+        <div class="header-content">
+            <div class="brand-block">
+                <div class="brand-name-en-main">Tadbir Farayand Vira Co.</div>
+                <div class="brand-name-en-sub">Engineering, Design and Process Consultancy</div>
+                <div class="brand-credits">
+                    Designed &amp; Developed by: <strong>Seyed Saeed Vahabi</strong>
+                </div>
+            </div>
+            <div class="header-title-block">
+                <div class="header-main-title">Pressure Relief Valve Sizing (PSV)</div>
+                <div class="header-subtitle">
+                    Based on generic API 520 methodology and API 526 effective orifice areas (D–T).
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="main-card">
+
+        <!-- PROJECT INFO -->
+        <section>
+            <div class="section-header">
+                <div>
+                    <div class="section-title">Project Information</div>
+                    <div class="section-subtitle">
+                        Project data is used in calculations, project storage, and print/PDF reports.
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-grid">
+                <div>
+                    <label for="proj_name">Project Name:</label>
+                    <input id="proj_name" type="text" placeholder="e.g. PSV-Unit 100 Overpressure">
+                </div>
+                <div>
+                    <label for="proj_client">Client:</label>
+                    <input id="proj_client" type="text" placeholder="Client name">
+                </div>
+                <div>
+                    <label for="proj_location">Unit / Location:</label>
+                    <input id="proj_location" type="text" placeholder="Plant / Unit / Area">
+                </div>
+                <div>
+                    <label for="proj_tag">PSV Tag:</label>
+                    <input id="proj_tag" type="text" placeholder="e.g. PSV-1001">
+                </div>
+
+                <div>
+                    <label for="proj_date">Date:</label>
+                    <input id="proj_date" type="date">
+                </div>
+                <div>
+                    <label for="proj_rev">Revision:</label>
+                    <input id="proj_rev" type="text" placeholder="Rev. 0">
+                </div>
+                <div>
+                    <label for="proj_engineer">Process Engineer:</label>
+                    <input id="proj_engineer" type="text" placeholder="Engineer name">
+                </div>
+                <div>
+                    <label for="proj_notes">Notes:</label>
+                    <input id="proj_notes" type="text" placeholder="Optional notes">
+                </div>
+            </div>
+
+            <div class="project-actions">
+                <button class="btn btn-primary" onclick="saveProject()">
+                    <span class="btn-icon">💾</span> Save Project
+                </button>
+
+                <select id="stored_projects" class="btn btn-secondary" style="min-width: 180px;"></select>
+
+                <button class="btn btn-secondary" onclick="loadProject()">
+                    <span class="btn-icon">📂</span> Load Project
+                </button>
+
+                <span>Projects are stored in browser LocalStorage on this device.</span>
+            </div>
+        </section>
+
+        <!-- TABS -->
+        <nav class="tabs">
+            <button class="tab active" data-tab="rv-liquid">
+                <span>💧</span> Liquid
+            </button>
+            <button class="tab" data-tab="rv-gas">
+                <span>🌬️</span> Gas/Vapor
+            </button>
+            <button class="tab" data-tab="rv-steam">
+                <span>☁️</span> Steam
+            </button>
+            <button class="tab" data-tab="rv-two-phase">
+                <span>🌀</span> Two-Phase
+            </button>
+        </nav>
+
+        <!-- Liquid -->
+        <section id="rv-liquid" class="tab-content active">
+            <div class="calc-title">Pressure Relief Valve – Liquid Service</div>
+            <div class="unit-hint">
+                Incompressible flow: Q [m³/h], ΔP [bar], ρ [kg/m³]. Ceff is discharge coefficient × correction factors.
+            </div>
+
+            <div class="form-grid">
+                <label for="liq_Q">Required volumetric flow Q [m³/h]:</label>
+                <input id="liq_Q" type="number" step="any" min="0" class="number-input" placeholder="e.g. 30">
+
+                <label for="liq_dP">Pressure drop ΔP [bar]:</label>
+                <input id="liq_dP" type="number" step="any" min="0" class="number-input" placeholder="e.g. 5">
+
+                <label for="liq_rho">Liquid density ρ [kg/m³]:</label>
+                <input id="liq_rho" type="number" step="any" min="0" class="number-input" placeholder="e.g. 800">
+
+                <label for="liq_Ceff">Effective coefficient Ceff (Kd × Kc × ...):</label>
+                <input id="liq_Ceff" type="number" step="any" min="0" class="number-input" value="0.62">
+            </div>
+
+            <div class="calc-actions">
+                <button class="btn btn-secondary" onclick="calculateLiquidArea()">
+                    Calculate Liquid Orifice Area
+                </button>
+                <div id="liq_error" class="error-message"></div>
+            </div>
+
+            <div class="result-card">
+                <div class="result-label">Required effective orifice area (A<sub>req</sub>):</div>
+                A = <span id="liq_A_m2" class="result-value">---</span> m²<br>
+                A = <span id="liq_A_cm2" class="result-value">---</span> cm²<br>
+                A = <span id="liq_A_mm2" class="result-value">---</span> mm²
+
+                <div class="orifice-line">
+                    <div class="result-label">Automatic API 526 orifice selection:</div>
+                    Orifice Letter: <span id="liq_orifice_letter" class="result-value">---</span><br>
+                    A<sub>API</sub> = <span id="liq_orifice_area_cm2" class="result-value">---</span> cm²
+                    (≈ <span id="liq_orifice_area_in2" class="result-value">---</span> in²)
+                </div>
+
+                <div class="note">
+                    Standard incompressible orifice equation is applied as in API 520 for liquid relief valves.
+                </div>
+            </div>
+        </section>
+
+        <!-- Gas/Vapor -->
+        <section id="rv-gas" class="tab-content">
+            <div class="calc-title">Pressure Relief Valve – Gas / Vapor Service</div>
+            <div class="unit-hint">
+                Compressible choked flow: W [kg/h], T [K], P1 [bar abs], k, M. Ceff is effective coefficient.
+            </div>
+
+            <div class="form-grid">
+                <label for="gas_W">Required mass flow W [kg/h]:</label>
+                <input id="gas_W" type="number" step="any" min="0" class="number-input" placeholder="e.g. 15000">
+
+                <label for="gas_T">Relieving temperature T [K]:</label>
+                <input id="gas_T" type="number" step="any" min="0" class="number-input" placeholder="e.g. 450">
+
+                <label for="gas_P1">Relieving pressure P<sub>1</sub> [bar abs]:</label>
+                <input id="gas_P1" type="number" step="any" min="0" class="number-input" placeholder="e.g. 20">
+
+                <label for="gas_k">Isentropic exponent k:</label>
+                <input id="gas_k" type="number" step="any" min="0" class="number-input" placeholder="e.g. 1.3">
+
+                <label for="gas_M">Molecular weight M:</label>
+                <input id="gas_M" type="number" step="any" min="0" class="number-input" placeholder="e.g. 18">
+
+                <label for="gas_Ceff">Effective coefficient Ceff (Kd × Kc × ...):</label>
+                <input id="gas_Ceff" type="number" step="any" min="0" class="number-input" value="0.975">
+            </div>
+
+            <div class="calc-actions">
+                <button class="btn btn-secondary" onclick="calculateGasArea()">
+                    Calculate Gas / Vapor Orifice Area
+                </button>
+                <div id="gas_error" class="error-message"></div>
+            </div>
+
+            <div class="result-card">
+                <div class="result-label">Required effective orifice area (A<sub>req</sub>):</div>
+                A = <span id="gas_A_m2" class="result-value">---</span> m²<br>
+                A = <span id="gas_A_cm2" class="result-value">---</span> cm²<br>
+                A = <span id="gas_A_mm2" class="result-value">---</span> mm²
+
+                <div class="orifice-line">
+                    <div class="result-label">Automatic API 526 orifice selection:</div>
+                    Orifice Letter: <span id="gas_orifice_letter" class="result-value">---</span><br>
+                    A<sub>API</sub> = <span id="gas_orifice_area_cm2" class="result-value">---</span> cm²
+                    (≈ <span id="gas_orifice_area_in2" class="result-value">---</span> in²)
+                </div>
+
+                <div class="note">
+                    Ideal gas equation with choked-flow factor as per API 520 Part I is implemented.
+                </div>
+            </div>
+        </section>
+
+        <!-- Steam -->
+        <section id="rv-steam" class="tab-content">
+            <div class="calc-title">Pressure Relief Valve – Steam Service</div>
+            <div class="unit-hint">
+                Saturated or superheated steam, W [kg/h], P1 [bar abs]. Steam-specific constants are used.
+            </div>
+
+            <div class="form-grid">
+                <label for="stm_W">Required steam flow W [kg/h]:</label>
+                <input id="stm_W" type="number" step="any" min="0" class="number-input" placeholder="e.g. 25000">
+
+                <label for="stm_P1">Relieving pressure P<sub>1</sub> [bar abs]:</label>
+                <input id="stm_P1" type="number" step="any" min="0" class="number-input" placeholder="e.g. 25">
+
+                <label for="stm_Ceff">Effective coefficient Ceff:</label>
+                <input id="stm_Ceff" type="number" step="any" min="0" class="number-input" value="0.975">
+            </div>
+
+            <div class="calc-actions">
+                <button class="btn btn-secondary" onclick="calculateSteamArea()">
+                    Calculate Steam Orifice Area
+                </button>
+                <div id="stm_error" class="error-message"></div>
+            </div>
+
+            <div class="result-card">
+                <div class="result-label">Required effective orifice area (A<sub>req</sub>):</div>
+                A = <span id="stm_A_m2" class="result-value">---</span> m²<br>
+                A = <span id="stm_A_cm2" class="result-value">---</span> cm²<br>
+                A = <span id="stm_A_mm2" class="result-value">---</span> mm²
+
+                <div class="orifice-line">
+                    <div class="result-label">Automatic API 526 orifice selection:</div>
+                    Orifice Letter: <span id="stm_orifice_letter" class="result-value">---</span><br>
+                    A<sub>API</sub> = <span id="stm_orifice_area_cm2" class="result-value">---</span> cm²
+                    (≈ <span id="stm_orifice_area_in2" class="result-value">---</span> in²)
+                </div>
+
+                <div class="note">
+                    Same choked-flow equation is used as for gas, with appropriate k and M for steam.
+                    For final sizing according to API 520, dedicated steam correction factors and
+                    manufacturer’s data shall be applied.
+                </div>
+            </div>
+        </section>
+
+        <!-- Two-Phase -->
+        <section id="rv-two-phase" class="tab-content">
+            <div class="calc-title">Pressure Relief Valve – Two-Phase Service (Homogeneous Model)</div>
+            <div class="unit-hint">
+                Homogeneous model: total mass flow W [kg/h], mixture density ρ<sub>mix</sub> [kg/m³],
+                ΔP [bar]. Kd, Kw, Kc are entered separately; Ceff = Kd × Kw × Kc is calculated automatically.
+            </div>
+
+            <div class="form-grid">
+                <label for="tp_W">Required total mass flow W [kg/h]:</label>
+                <input id="tp_W" type="number" step="any" min="0" class="number-input" placeholder="e.g. 2000">
+
+                <label for="tp_dP">Pressure drop ΔP [bar]:</label>
+                <input id="tp_dP" type="number" step="any" min="0" class="number-input" placeholder="e.g. 8">
+
+                <label for="tp_rho">Mixture density ρ<sub>mix</sub> [kg/m³]:</label>
+                <input id="tp_rho" type="number" step="any" min="0" class="number-input" placeholder="e.g. 400">
+
+                <label for="tp_Kd">Discharge coefficient Kd:</label>
+                <input id="tp_Kd" type="number" step="any" min="0" class="number-input" value="0.62" oninput="updateTwoPhaseCeff()">
+
+                <label for="tp_Kw">Correction factor Kw:</label>
+                <input id="tp_Kw" type="number" step="any" min="0" class="number-input" value="1.00" oninput="updateTwoPhaseCeff()">
+
+                <label for="tp_Kc">Combination factor Kc:</label>
+                <input id="tp_Kc" type="number" step="any" min="0" class="number-input" value="1.00" oninput="updateTwoPhaseCeff()">
+
+                <label for="tp_Ceff">Ceff (Kd × Kw × Kc):</label>
+                <input id="tp_Ceff" type="number" class="number-input" readonly style="background:#e5e7eb;">
+            </div>
+
+            <div class="calc-actions">
+                <button class="btn btn-secondary" onclick="calculateTwoPhaseArea()">
+                    Calculate Two-Phase Orifice Area
+                </button>
+                <div id="tp_error" class="error-message"></div>
+            </div>
+
+            <div class="result-card">
+                <div class="result-label">Required effective orifice area (A<sub>req</sub>):</div>
+                A = <span id="tp_A_m2" class="result-value">---</span> m²<br>
+                A = <span id="tp_A_cm2" class="result-value">---</span> cm²<br>
+                A = <span id="tp_A_mm2" class="result-value">---</span> mm²
+
+                <div class="orifice-line">
+                    <div class="result-label">Automatic API 526 orifice selection:</div>
+                    Orifice Letter: <span id="tp_orifice_letter" class="result-value">---</span><br>
+                    A<sub>API</sub> = <span id="tp_orifice_area_cm2" class="result-value">---</span> cm²
+                    (≈ <span id="tp_orifice_area_in2" class="result-value">---</span> in²)
+                </div>
+
+                <div class="note">
+                    First, Q = W / ρ<sub>mix</sub> (W in kg/s, Q in m³/s), then the same incompressible
+                    orifice equation as for liquid is applied. For rigorous two-phase sizing (flashing,
+                    non-equilibrium) refer to detailed API / ISO methods and process simulation tools.
+                </div>
+            </div>
+        </section>
+
+        <!-- PSV FIGURE (simple stylized symbol) -->
+        <section class="psv-figure-card">
+            <div class="psv-figure-svg">
+                <svg viewBox="0 0 60 150" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="bodyGradient" x1="0" x2="0" y1="0" y2="1">
+                            <stop offset="0%" stop-color="#22d3ee"/>
+                            <stop offset="100%" stop-color="#0f172a"/>
+                        </linearGradient>
+                    </defs>
+                    <rect x="22" y="10" width="16" height="40" rx="3" fill="url(#bodyGradient)" />
+                    <rect x="20" y="52" width="20" height="55" rx="4" fill="#1f2937" stroke="#38bdf8" stroke-width="1.5"/>
+                    <rect x="18" y="110" width="24" height="24" rx="4" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
+                    <rect x="27" y="134" width="6" height="12" fill="#9ca3af"/>
+                    <line x1="30" y1="10" x2="45" y2="2" stroke="#e5e7eb" stroke-width="2"/>
+                    <circle cx="46" cy="2" r="3" fill="#f97316"/>
+                </svg>
+            </div>
+            <div class="psv-figure-text">
+                <div class="psv-figure-title">PSV Sketch (not to scale)</div>
+                <div class="psv-figure-line">• Body and bonnet – code stamped per API / ASME.</div>
+                <div class="psv-figure-line">• Inlet and outlet flanges – match process nozzle rating.</div>
+                <div class="psv-figure-line">• Spring and disc – certified for set pressure.</div>
+                <div class="psv-figure-note">
+                    For real engineering design, always refer to manufacturer’s certified datasheets,
+                    nozzle dimensions and rating charts.
+                </div>
+            </div>
+        </section>
+
+        <!-- SUMMARY & PRINT -->
+        <section class="summary-card" id="print-summary">
+            <div class="summary-header">
+                <div class="summary-title">Project &amp; PSV Sizing Summary</div>
+                <div class="section-subtitle">
+                    Tadbir Farayand Vira – Designed &amp; Developed by: Seyed Saeed Vahabi
+                </div>
+            </div>
+
+            <div style="font-size:11px; margin-bottom:6px;">
+                <strong>Project:</strong> <span id="sum_proj_name">-</span> &nbsp; | &nbsp;
+                <strong>Client:</strong> <span id="sum_proj_client">-</span> &nbsp; | &nbsp;
+                <strong>Unit/Location:</strong> <span id="sum_proj_location">-</span> &nbsp; | &nbsp;
+                <strong>Tag:</strong> <span id="sum_proj_tag">-</span><br>
+                <strong>Date:</strong> <span id="sum_proj_date">-</span> &nbsp; | &nbsp;
+                <strong>Rev:</strong> <span id="sum_proj_rev">-</span> &nbsp; | &nbsp;
+                <strong>Process Engineer:</strong> <span id="sum_proj_engineer">-</span>
+            </div>
+            <div style="font-size:11px; color:var(--text-muted); margin-bottom:4px;">
+                Notes: <span id="sum_proj_notes">-</span>
+            </div>
+
+            <table class="summary-table">
+                <thead>
+                <tr>
+                    <th>Service</th>
+                    <th>A<sub>req</sub> [cm²]</th>
+                    <th>API 526 Orifice</th>
+                    <th>A<sub>API</sub> [cm²]</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Liquid</td>
+                    <td><span id="sum_liq_A_cm2">-</span></td>
+                    <td><span id="sum_liq_orifice_letter">-</span></td>
+                    <td><span id="sum_liq_orifice_area_cm2">-</span></td>
+                </tr>
+                <tr>
+                    <td>Gas/Vapor</td>
+                    <td><span id="sum_gas_A_cm2">-</span></td>
+                    <td><span id="sum_gas_orifice_letter">-</span></td>
+                    <td><span id="sum_gas_orifice_area_cm2">-</span></td>
+                </tr>
+                <tr>
+                    <td>Steam</td>
+                    <td><span id="sum_stm_A_cm2">-</span></td>
+                    <td><span id="sum_stm_orifice_letter">-</span></td>
+                    <td><span id="sum_stm_orifice_area_cm2">-</span></td>
+                </tr>
+                <tr>
+                    <td>Two-Phase</td>
+                    <td><span id="sum_tp_A_cm2">-</span></td>
+                    <td><span id="sum_tp_orifice_letter">-</span></td>
+                    <td><span id="sum_tp_orifice_area_cm2">-</span></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <button class="btn btn-outline btn-print" id="print-btn">
+                <span class="btn-icon">🖨️</span>
+                Print / PDF
+            </button>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="footer-card">
+            <div>
+                <strong>Tadbir Farayand Vira Co.</strong> – Process Engineering, Design and Consultancy.
+            </div>
+            <div>
+                Software designed &amp; developed by: <strong>Seyed Saeed Vahabi</strong>
+            </div>
+        </footer>
+    </main>
+</div>
+
+<script>
+    // -------- THEME TOGGLE --------
+    (function () {
+        const body = document.body;
+        const btn = document.getElementById('theme-toggle');
+        const label = document.getElementById('theme-toggle-label');
+
+        function applyTheme(theme) {
+            body.classList.remove('light-theme', 'dark-theme');
+            body.classList.add(theme);
+            label.textContent = theme === 'dark-theme' ? 'Dark Pro' : 'Light';
+        }
+
+        const saved = localStorage.getItem('psv_theme');
+        if (saved === 'light-theme' || saved === 'dark-theme') {
+            applyTheme(saved);
+        } else {
+            applyTheme('dark-theme');
+        }
+
+        btn.addEventListener('click', function () {
+            const current = body.classList.contains('dark-theme') ? 'dark-theme' : 'light-theme';
+            const next = current === 'dark-theme' ? 'light-theme' : 'dark-theme';
+            applyTheme(next);
+            localStorage.setItem('psv_theme', next);
+        });
+    })();
+
+    // --- API 526 Orifice Table (Effective Areas) ---
+    const api526Orifices = [
+        {letter: "D", area_in2: 0.110, area_mm2: 71},
+        {letter: "E", area_in2: 0.196, area_mm2: 126},
+        {letter: "F", area_in2: 0.307, area_mm2: 198},
+        {letter: "G", area_in2: 0.503, area_mm2: 325},
+        {letter: "H", area_in2: 0.785, area_mm2: 506},
+        {letter: "J", area_in2: 1.287, area_mm2: 830},
+        {letter: "K", area_in2: 1.838, area_mm2: 1186},
+        {letter: "L", area_in2: 2.853, area_mm2: 1841},
+        {letter: "M", area_in2: 3.60, area_mm2: 2323},
+        {letter: "N", area_in2: 4.34, area_mm2: 2800},
+        {letter: "P", area_in2: 6.38, area_mm2: 4116},
+        {letter: "Q", area_in2: 11.05, area_mm2: 7129},
+        {letter: "R", area_in2: 16.00, area_mm2: 10323},
+        {letter: "T", area_in2: 26.00, area_mm2: 16774}
+    ].map(o => ({
+        ...o,
+        area_cm2: o.area_mm2 / 100.0
+    }));
+
+    function selectApiOrifice(required_cm2) {
+        for (let i = 0; i < api526Orifices.length; i++) {
+            if (api526Orifices[i].area_cm2 >= required_cm2) {
+                return api526Orifices[i];
+            }
+        }
+        return null;
+    }
+
+    // --- Tabs ---
+    document.querySelectorAll('.tab').forEach(function (tabBtn) {
+        tabBtn.addEventListener('click', function () {
+            const targetId = this.getAttribute('data-tab');
+            document.querySelectorAll('.tab').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            this.classList.add('active');
+            document.getElementById(targetId).classList.add('active');
+        });
+    });
+
+    function showError(id, msg) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = msg;
+    }
+
+    function clearError(id) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = '';
+    }
+
+    function formatAreaOutputs(A_m2, id_m2, id_cm2, id_mm2) {
+        const A_cm2 = A_m2 * 1e4;
+        const A_mm2 = A_m2 * 1e6;
+        document.getElementById(id_m2).textContent = A_m2.toExponential(4);
+        document.getElementById(id_cm2).textContent = A_cm2.toFixed(3);
+        document.getElementById(id_mm2).textContent = A_mm2.toFixed(1);
+        return {A_m2, A_cm2, A_mm2};
+    }
+
+    function setOrificeOutputs(prefix, required_cm2) {
+        const letterEl = document.getElementById(prefix + '_orifice_letter');
+        const areaCmEl = document.getElementById(prefix + '_orifice_area_cm2');
+        const areaInEl = document.getElementById(prefix + '_orifice_area_in2');
+        if (!letterEl || !areaCmEl || !areaInEl) return;
+
+        const sel = selectApiOrifice(required_cm2);
+        if (!sel) {
+            letterEl.textContent = '> T';
+            areaCmEl.textContent = '---';
+            areaInEl.textContent = '---';
+        } else {
+            letterEl.textContent = sel.letter;
+            areaCmEl.textContent = sel.area_cm2.toFixed(3);
+            areaInEl.textContent = sel.area_in2.toFixed(3);
+        }
+    }
+
+    function updateSummary() {
+        const getVal = id => document.getElementById(id).value || '-';
+        document.getElementById('sum_proj_name').textContent = getVal('proj_name');
+        document.getElementById('sum_proj_client').textContent = getVal('proj_client');
+        document.getElementById('sum_proj_location').textContent = getVal('proj_location');
+        document.getElementById('sum_proj_tag').textContent = getVal('proj_tag');
+        document.getElementById('sum_proj_date').textContent = getVal('proj_date');
+        document.getElementById('sum_proj_rev').textContent = getVal('proj_rev');
+        document.getElementById('sum_proj_engineer').textContent = getVal('proj_engineer');
+        document.getElementById('sum_proj_notes').textContent = getVal('proj_notes');
+    }
+
+    // Call updateSummary whenever project fields change
+    ['proj_name','proj_client','proj_location','proj_tag','proj_date','proj_rev','proj_engineer','proj_notes']
+        .forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('input', updateSummary);
+        });
+
+    // ---------------- CALCULATIONS ----------------
+    function calculateLiquidArea() {
+        clearError('liq_error');
+        const Q = parseFloat(document.getElementById('liq_Q').value);
+        const dP = parseFloat(document.getElementById('liq_dP').value);
+        const rho = parseFloat(document.getElementById('liq_rho').value);
+        const Ceff = parseFloat(document.getElementById('liq_Ceff').value);
+
+        if (!(Q > 0) || !(dP > 0) || !(rho > 0) || !(Ceff > 0)) {
+            showError('liq_error', 'Please enter positive values for all inputs.');
+            return;
+        }
+
+        const Q_m3_s = Q / 3600.0;
+        const dP_Pa = dP * 1e5;
+        const A_m2 = Q_m3_s / (Ceff * Math.sqrt(2 * dP_Pa / rho));
+        const {A_cm2} = formatAreaOutputs(A_m2, 'liq_A_m2', 'liq_A_cm2', 'liq_A_mm2');
+        setOrificeOutputs('liq', A_cm2);
+        document.getElementById('sum_liq_A_cm2').textContent = A_cm2.toFixed(3);
+    }
+
+    function calculateGasArea() {
+        clearError('gas_error');
+        const W = parseFloat(document.getElementById('gas_W').value);
+        const T = parseFloat(document.getElementById('gas_T').value);
+        const P1 = parseFloat(document.getElementById('gas_P1').value);
+        const k = parseFloat(document.getElementById('gas_k').value);
+        const M = parseFloat(document.getElementById('gas_M').value);
+        const Ceff = parseFloat(document.getElementById('gas_Ceff').value);
+
+        if (!(W > 0) || !(T > 0) || !(P1 > 0) || !(k > 1) || !(M > 0) || !(Ceff > 0)) {
+            showError('gas_error', 'Please enter valid positive values (k > 1).');
+            return;
+        }
+
+        const R_universal = 8.314;
+        const P1_Pa = P1 * 1e5;
+        const W_kg_s = W / 3600.0;
+        const C_gas = Math.sqrt(k * Math.pow(2 / (k + 1), (k + 1) / (k - 1)));
+        const A_m2 = (W_kg_s * Math.sqrt(T * M)) / (Ceff * C_gas * P1_Pa) * Math.sqrt(R_universal);
+        const {A_cm2} = formatAreaOutputs(A_m2, 'gas_A_m2', 'gas_A_cm2', 'gas_A_mm2');
+        setOrificeOutputs('gas', A_cm2);
+        document.getElementById('sum_gas_A_cm2').textContent = A_cm2.toFixed(3);
+    }
+
+    function calculateSteamArea() {
+        clearError('stm_error');
+        const W = parseFloat(document.getElementById('stm_W').value);
+        const P1 = parseFloat(document.getElementById('stm_P1').value);
+        const Ceff = parseFloat(document.getElementById('stm_Ceff').value);
+
+        if (!(W > 0) || !(P1 > 0) || !(Ceff > 0)) {
+            showError('stm_error', 'Please enter positive values for all inputs.');
+            return;
+        }
+
+        // Simplified steam sizing (similar to gas; constants tuned for typical steam)
+        const k = 1.3;
+        const M = 18.0;
+        const T = 450.0; // placeholder, user-specific T can be added later
+        const R_universal = 8.314;
+        const P1_Pa = P1 * 1e5;
+        const W_kg_s = W / 3600.0;
+        const C_gas = Math.sqrt(k * Math.pow(2 / (k + 1), (k + 1) / (k - 1)));
+        const A_m2 = (W_kg_s * Math.sqrt(T * M)) / (Ceff * C_gas * P1_Pa) * Math.sqrt(R_universal);
+
+        const {A_cm2} = formatAreaOutputs(A_m2, 'stm_A_m2', 'stm_A_cm2', 'stm_A_mm2');
+        setOrificeOutputs('stm', A_cm2);
+        document.getElementById('sum_stm_A_cm2').textContent = A_cm2.toFixed(3);
+    }
+
+    function updateTwoPhaseCeff() {
+        const Kd = parseFloat(document.getElementById('tp_Kd').value) || 0;
+        const Kw = parseFloat(document.getElementById('tp_Kw').value) || 0;
+        const Kc = parseFloat(document.getElementById('tp_Kc').value) || 0;
+        const Ceff = Kd * Kw * Kc;
+        document.getElementById('tp_Ceff').value = Ceff ? Ceff.toFixed(4) : '';
+    }
+
+    function calculateTwoPhaseArea() {
+        clearError('tp_error');
+        const W = parseFloat(document.getElementById('tp_W').value);
+        const dP = parseFloat(document.getElementById('tp_dP').value);
+        const rho_mix = parseFloat(document.getElementById('tp_rho').value);
+        const Ceff = parseFloat(document.getElementById('tp_Ceff').value);
+
+        if (!(W > 0) || !(dP > 0) || !(rho_mix > 0) || !(Ceff > 0)) {
+            showError('tp_error', 'Please enter positive values for all inputs and ensure Ceff is calculated.');
+            return;
+        }
+
+        const W_kg_s = W / 3600.0;
+        const Q_m3_s = W_kg_s / rho_mix;
+        const dP_Pa = dP * 1e5;
+        const A_m2 = Q_m3_s / (Ceff * Math.sqrt(2 * dP_Pa / rho_mix));
+
+        const {A_cm2} = formatAreaOutputs(A_m2, 'tp_A_m2', 'tp_A_cm2', 'tp_A_mm2');
+        setOrificeOutputs('tp', A_cm2);
+        document.getElementById('sum_tp_A_cm2').textContent = A_cm2.toFixed(3);
+    }
+
+    // ---------------- STORAGE ----------------
+    function getProjectObject() {
+        return {
+            proj_name: document.getElementById('proj_name').value,
+            proj_client: document.getElementById('proj_client').value,
+            proj_location: document.getElementById('proj_location').value,
+            proj_tag: document.getElementById('proj_tag').value,
+            proj_date: document.getElementById('proj_date').value,
+            proj_rev: document.getElementById('proj_rev').value,
+            proj_engineer: document.getElementById('proj_engineer').value,
+            proj_notes: document.getElementById('proj_notes').value
+        };
+    }
+
+    function setProjectFromObject(o) {
+        document.getElementById('proj_name').value = o.proj_name || '';
+        document.getElementById('proj_client').value = o.proj_client || '';
+        document.getElementById('proj_location').value = o.proj_location || '';
+        document.getElementById('proj_tag').value = o.proj_tag || '';
+        document.getElementById('proj_date').value = o.proj_date || '';
+        document.getElementById('proj_rev').value = o.proj_rev || '';
+        document.getElementById('proj_engineer').value = o.proj_engineer || '';
+        document.getElementById('proj_notes').value = o.proj_notes || '';
+        updateSummary();
+    }
+
+    function getStoredProjects() {
+        const raw = localStorage.getItem('psv_projects_v1');
+        if (!raw) return {};
+        try {
+            return JSON.parse(raw);
+        } catch {
+            return {};
+        }
+    }
+
+    function saveStoredProjects(obj) {
+        localStorage.setItem('psv_projects_v1', JSON.stringify(obj));
+    }
+
+    function refreshStoredProjectsDropdown() {
+        const select = document.getElementById('stored_projects');
+        const projects = getStoredProjects();
+        const keys = Object.keys(projects);
+
+        select.innerHTML = '';
+        const placeholder = document.createElement('option');
+        placeholder.value = '';
+        placeholder.textContent = keys.length ? 'Select stored project…' : 'No stored projects';
+        placeholder.disabled = true;
+        placeholder.selected = true;
+        select.appendChild(placeholder);
+
+        keys.forEach(key => {
+            const opt = document.createElement('option');
+            opt.value = key;
+            opt.textContent = key;
+            select.appendChild(opt);
+        });
+    }
+
+    function saveProject() {
+        const name = document.getElementById('proj_name').value.trim() || 'Unnamed Project';
+        const projects = getStoredProjects();
+        projects[name] = getProjectObject();
+        saveStoredProjects(projects);
+        refreshStoredProjectsDropdown();
+        alert('Project saved: ' + name);
+    }
+
+    function loadProject() {
+        const select = document.getElementById('stored_projects');
+        const key = select.value;
+        if (!key) {
+            alert('Select a stored project from the dropdown.');
+            return;
+        }
+        const projects = getStoredProjects();
+        if (!projects[key]) {
+            alert('Selected project not found.');
+            return;
+        }
+        setProjectFromObject(projects[key]);
+    }
+
+    // Expose for buttons
+    window.saveProject = saveProject;
+    window.loadProject = loadProject;
+    window.calculateLiquidArea = calculateLiquidArea;
+    window.calculateGasArea = calculateGasArea;
+    window.calculateSteamArea = calculateSteamArea;
+    window.calculateTwoPhaseArea = calculateTwoPhaseArea;
+    window.updateTwoPhaseCeff = updateTwoPhaseCeff;
+
+    // Init
+    refreshStoredProjectsDropdown();
+    updateTwoPhaseCeff();
+    updateSummary();
+
+    // PRINT
+    document.getElementById('print-btn').addEventListener('click', function () {
+        window.print();
+    });
+</script>
+</body>
+</html>
